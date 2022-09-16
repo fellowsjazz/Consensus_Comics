@@ -9,12 +9,25 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.3.2",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@nomicfoundation/hardhat-toolbox": "^1.0.2",
+    "@openzeppelin/contracts": "^4.7.3",
+    "@rainbow-me/rainbowkit": "^0.5.3",
+    "dotenv": "^16.0.2",
+    "ethers": "^5.7.1",
+    "flickity": "^2.3.0",
+    "framer-motion": "^7.3.5",
     "next": "12.3.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-elastic-carousel": "^0.11.5",
+    "wagmi": "^0.6.6"
   },
   "devDependencies": {
     "eslint": "8.23.1",
-    "eslint-config-next": "12.3.0"
+    "eslint-config-next": "12.3.0",
+    "hardhat": "^2.11.1"
   }
 }
