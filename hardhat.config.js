@@ -5,7 +5,7 @@ dotenv.config()
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  solidity: "0.8.9",
+  solidity: "0.8.7",
   etherscan:{
     apiKey: "YKN4B5K5F6J7BVHFRWJX3BV1UVAUVYYDKE"
   },
@@ -18,6 +18,12 @@ module.exports = {
     },
     goerli: {
       url: `${process.env.GOERLI_KEY}`,
+      accounts: [`${process.env.PRIVATE_KEY}`],
+      allowUnlimitedContractSize: true
+      
+    },
+    mainnet: {
+      url: `${process.env.MAINNET_KEY}`,
       accounts: [`${process.env.PRIVATE_KEY}`],
       gas: "auto",
       gasPrice: "auto"

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Center, Flex, Image, Tooltip } from "@chakra-ui/react";
 import {
   Modal,
@@ -12,19 +12,47 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import ContractABI from "../artifacts/contracts/ConsensusComics.sol/ConsensusComics.json";
-import { useContractWrite, usePrepareContractWrite } from "wagmi";
+import { useContractWrite, usePrepareContractWrite, useAccount } from "wagmi";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
+import appData from "../constants";
+import getProofForAddress from "../utils/merkle/MerkleTree";
+import { whiteList } from "../utils/merkle/whiteList";
 
-export default function MintButton(props) {
+export default function WhiteListMintButton(props) {
+  const { address, isConnecting, isDisconnected } = useAccount();
+  const [merkleProof, setMerkleProof] = useState();
+  const [userAddress, setUserAddress] = useState();
+
+  console.log("proof found in whitelistmintbutton: ", merkleProof);
+
+  useEffect(() => {
+    if (address) {
+      setUserAddress(address);
+      setMerkleProof([
+        getProofForAddress(address).then((proof) => {
+          setMerkleProof(proof);
+        }),
+      ]);
+      console.log("Current user address is ", userAddress);
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log("MERKLE PROOF FOR THIS ADDRESS IS: ", merkleProof);
+  }, [merkleProof]);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { config, error } = usePrepareContractWrite({
-    addressOrName: "0xb524aa3e08ac2044a5ff6770642179d1c661aa3c",
+    addressOrName: "0xF007Ab65C07ac1F40D63D8cF36D116526eDB7703",
     contractInterface: ContractABI.abi,
-    functionName: "mint",
-    args: [props.mintAmount],
+    functionName: "whiteListMint",
+    args: [merkleProof, props.mintAmount],
   });
 
-  const {openConnectModal} = useConnectModal()
+  
+  console.log(`Config: ${config} error: ${error}`)
+
+  const { openConnectModal } = useConnectModal();
 
   useEffect(() => {
     console.log("mint amount in button: ", props.mintAmount);
@@ -39,10 +67,12 @@ export default function MintButton(props) {
   }, [data]);
 
   const mintHandler = () => {
-    if (!localStorage.getItem("wagmi.connected")){
-      openConnectModal()
-    };
+    
+    if (!localStorage.getItem("wagmi.connected")) {
+      openConnectModal();
+    }
     if (!write) return;
+    console.log("it sees write")
     onOpen();
     write();
     console.log("data from transaction: ", data);
@@ -57,11 +87,13 @@ export default function MintButton(props) {
     if (isLoading) {
       return <Spinner />;
     }
-    if (isSuccess){
-    return (
-      <a href={`https://etherscan.io/tx/${data.hash}`} target="_blank">View Transaction</a>
-    )}
-    else return "Transaction Failed";
+    if (isSuccess) {
+      return (
+        <a href={`https://etherscan.io/tx/${data.hash}`} target="_blank">
+          View Transaction
+        </a>
+      );
+    } else return "Transaction Failed";
   };
 
   return (
@@ -74,6 +106,7 @@ export default function MintButton(props) {
         height="5rem"
         bg="blue.200"
         onClick={mintHandler}
+        disabled={!whiteList.includes(address)}
       >
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
@@ -93,7 +126,7 @@ export default function MintButton(props) {
             </ModalFooter>
           </ModalContent>
         </Modal>
-        <Image src="/Mint.png" size="lg">
+        <Image src="/WhiteListMint.png" size="lg">
           {}
         </Image>
       </Button>

@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Slider, Flex, SliderTrack, SliderFilledTrack, SliderThumb, Text } from '@chakra-ui/react'
 import { useState } from 'react'
 
-export default function MintAmount() {
+export default function MintAmount(props) {
 
-    const [sliderValue, setSliderValue] = useState(1)
+    const [sliderValue, setSliderValue] = useState(100)
 
     function getNumber(sliderValue){
         if(sliderValue<=101){
@@ -19,6 +19,10 @@ export default function MintAmount() {
             return <b>5</b>
         }
     }
+
+    useEffect(()=>{
+        props.updateFunction(sliderValue/100)
+    },[sliderValue])
 
 
   return (

@@ -20,6 +20,9 @@ import InfoStrip from "../components/InfoStrip";
 import MintAmount from "../components/MintAmount";
 import ImageCarousel from "../components/ImageCarousel";
 import { useEffect } from "react";
+import MintCount from "../components/MintCount";
+import MintingControls from "../components/MintingControls";
+import InfoButton from "../components/InfoButton";
 
 export default function Home() {
 
@@ -36,6 +39,7 @@ export default function Home() {
       templateRows="repeat(6, 1fr)"
       h="100vh"
       bg=""
+      pb='1%'
     >
       <GridItem rowSpan={1} colSpan={5}>
         <Header />
@@ -52,18 +56,19 @@ export default function Home() {
         </Center>
       </GridItem>
       <GridItem rowStart={4} rowSpan={1} colStart={2} colSpan={3} bg="">
-        <MintButton />
+        {/* <MintButton /> */}
+        <MintingControls/>
         <Grid templateColumns={"repeat(5, 1fr)"}>
           <GridItem colStart={2} colSpan={3} py="5%">
-            <MintAmount />
+            {/* <MintAmount /> */}
           </GridItem>
         </Grid>
       </GridItem>
       <GridItem rowStart={6} colSpan={1} bg="">
-        <Center h={"full"}>Info</Center>
+        <Center h={"full"}><MintCount/></Center>
       </GridItem>
       <GridItem rowStart={6} colStart={5} bg="">
-        <Center h={"full"}>Info</Center>
+        <Center h={"full"}><InfoButton/></Center>
       </GridItem>
     </Grid>
   );
