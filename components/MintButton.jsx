@@ -14,17 +14,29 @@ import {
 import ContractABI from "../artifacts/contracts/ConsensusComics.sol/ConsensusComics.json";
 import { useContractWrite, usePrepareContractWrite } from "wagmi";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
+import { BigNumber, ethers, utils } from "ethers";
 
 export default function MintButton(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const mintValue = `${props.mintAmount * ethers.utils.parseEther("0.005")}`;
+  const mintValueArg = BigNumber.from(mintValue);
+
+  console.log("mintValue: ", mintValue, "mintvalue arg: ", mintValueArg);
+
   const { config, error } = usePrepareContractWrite({
-    addressOrName: "0xb524aa3e08ac2044a5ff6770642179d1c661aa3c",
+    addressOrName: "0xf007ab65c07ac1f40d63d8cf36d116526edb7703",
     contractInterface: ContractABI.abi,
     functionName: "mint",
     args: [props.mintAmount],
+    overrides: {
+      value: mintValueArg,
+    },
   });
 
-  const {openConnectModal} = useConnectModal()
+  console.log(`MintButton Config: ${config} Error: ${error}`);
+
+  const { openConnectModal } = useConnectModal();
 
   useEffect(() => {
     console.log("mint amount in button: ", props.mintAmount);
@@ -39,9 +51,9 @@ export default function MintButton(props) {
   }, [data]);
 
   const mintHandler = () => {
-    if (!localStorage.getItem("wagmi.connected")){
-      openConnectModal()
-    };
+    if (!localStorage.getItem("wagmi.connected")) {
+      openConnectModal();
+    }
     if (!write) return;
     onOpen();
     write();
@@ -57,11 +69,13 @@ export default function MintButton(props) {
     if (isLoading) {
       return <Spinner />;
     }
-    if (isSuccess){
-    return (
-      <a href={`https://etherscan.io/tx/${data.hash}`} target="_blank">View Transaction</a>
-    )}
-    else return "Transaction Failed";
+    if (isSuccess) {
+      return (
+        <a href={`https://etherscan.io/tx/${data.hash}`} target="_blank">
+          View Transaction
+        </a>
+      );
+    } else return "Transaction Failed";
   };
 
   return (
@@ -100,3 +114,5 @@ export default function MintButton(props) {
     </Flex>
   );
 }
+
+///Your next step is fixing the mint button and mint count for the new contract

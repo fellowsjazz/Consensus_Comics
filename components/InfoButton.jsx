@@ -32,6 +32,9 @@ export default function InfoButton() {
 
           <DrawerBody>
           This generative NFT collection draws inspiration from the public domain comic books of the early 1950s, and was released in the week after Ethereum switched consensus mechanisms from PoW to PoS!
+          <br/>
+          <br/>
+          Each Consensus Comic is 0.005 ether to mint.  Whitelisted minters can claim up to 5 Consensus comics for free, and can mint more for 0.002 ether.
           </DrawerBody>
 
           <DrawerFooter>

@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Center, Flex, Image, Tooltip } from "@chakra-ui/react";
+import {
+  Button,
+  Center,
+  Flex,
+  Image,
+  Tooltip,
+  useToast,
+} from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
@@ -12,70 +19,71 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import ContractABI from "../artifacts/contracts/ConsensusComics.sol/ConsensusComics.json";
-import { useContractWrite, usePrepareContractWrite, useAccount } from "wagmi";
+import { useContractWrite, usePrepareContractWrite, useAccount , useEnsAddress} from "wagmi";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import appData from "../constants";
 import getProofForAddress from "../utils/merkle/MerkleTree";
-import { whiteList } from "../utils/merkle/whiteList";
+import { whiteList, whitelistLowerCase } from "../utils/merkle/whiteList";
+
 
 export default function WhiteListMintButton(props) {
   const { address, isConnecting, isDisconnected } = useAccount();
   const [merkleProof, setMerkleProof] = useState();
   const [userAddress, setUserAddress] = useState();
-
-  console.log("proof found in whitelistmintbutton: ", merkleProof);
-
-  useEffect(() => {
-    if (address) {
-      setUserAddress(address);
-      setMerkleProof([
-        getProofForAddress(address).then((proof) => {
-          setMerkleProof(proof);
-        }),
-      ]);
-      console.log("Current user address is ", userAddress);
-    }
-  }, []);
-
-  useEffect(() => {
-    console.log("MERKLE PROOF FOR THIS ADDRESS IS: ", merkleProof);
-  }, [merkleProof]);
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const { config, error } = usePrepareContractWrite({
-    addressOrName: "0xF007Ab65C07ac1F40D63D8cF36D116526eDB7703",
-    contractInterface: ContractABI.abi,
-    functionName: "whiteListMint",
-    args: [merkleProof, props.mintAmount],
-  });
-
-  
-  console.log(`Config: ${config} error: ${error}`)
-
+  const [showToast, setShowToast] = useState(false);
+  const [lowerCaseAddress, setLowerCaseAddress] = useState()
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const { openConnectModal } = useConnectModal();
 
-  useEffect(() => {
-    console.log("mint amount in button: ", props.mintAmount);
-  }, [props.mintAmount]);
+  //setting address to lowercase format
+  useEffect(()=>{
+    setLowerCaseAddress(address.toLowerCase())
+  },[address])
 
-  const { write, data, isLoading, isSuccess } = useContractWrite(config);
+  useEffect(()=>{
+    console.log(`LC ADDRESS: ${lowerCaseAddress}`) // once we have lc address defined, we can call and set merkleProof
+    const resolvedProof = getProofForAddress(lowerCaseAddress).then((v)=>{setMerkleProof(v)})
+    
+  },[lowerCaseAddress])
 
-  useEffect(() => {
-    if (data) {
-      console.log("data from transaction: ", data);
-    }
-  }, [data]);
+  //Getting merkle proof for this address
+
+  useEffect(()=>{
+    console.log(`Merkle Proof for ${lowerCaseAddress} received: ${merkleProof}`)
+  },[merkleProof])
+
+
+  //---
+
+  
+ const {config, error} = usePrepareContractWrite({
+  addressOrName: '0xF007Ab65C07ac1F40D63D8cF36D116526eDB7703',
+  contractInterface: ContractABI.abi,
+  functionName: 'whiteListMint',
+  args: [merkleProof, props.mintAmount]
+ })
+
+ const { write, data, isLoading, isSuccess } = useContractWrite(config);
+ console.log(`Whitelist Button: Config: ${config} error ${error}`)
+
+
+ 
+  
+
+
+  
+
 
   const mintHandler = () => {
-    
     if (!localStorage.getItem("wagmi.connected")) {
       openConnectModal();
     }
     if (!write) return;
-    console.log("it sees write")
+    console.log("it sees write");
     onOpen();
     write();
     console.log("data from transaction: ", data);
+    setShowToast(true)
   };
 
   const connectWarning = () => {
@@ -96,8 +104,25 @@ export default function WhiteListMintButton(props) {
     } else return "Transaction Failed";
   };
 
+  const Toast = () => {
+    const toast = useToast();
+    const id = 'error-toast'
+    if (error && !toast.isActive(id)) {
+      return toast({
+        id,
+        title: "Warning",
+        description: `${error.reason.replace('execution reverted:','')}`,
+        status:'warning',
+        isClosable: true,
+      });
+    }
+  };
+
+
+
   return (
     <Flex direction="row" justify="center" width={"100%"}>
+      
       <Button
         type="button"
         size={"xl"}
@@ -106,9 +131,11 @@ export default function WhiteListMintButton(props) {
         height="5rem"
         bg="blue.200"
         onClick={mintHandler}
-        disabled={!whiteList.includes(address)}
+        disabled={!whitelistLowerCase(whiteList).includes(`${lowerCaseAddress}`)}
       >
-        <Modal isOpen={isOpen} onClose={onClose}>
+        
+        <Modal isOpen={isOpen} onClose={onClose}>\
+        <Toast/>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>
@@ -127,7 +154,6 @@ export default function WhiteListMintButton(props) {
           </ModalContent>
         </Modal>
         <Image src="/WhiteListMint.png" size="lg">
-          {}
         </Image>
       </Button>
     </Flex>

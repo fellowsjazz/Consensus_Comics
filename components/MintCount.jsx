@@ -7,7 +7,7 @@ export default function MintCount() {
   const [mintCount, setMintCount] = useState();
 
   const { data, isError, isLoading } = useContractRead({
-    addressOrName: "0xb524aa3e08ac2044a5ff6770642179d1c661aa3c",
+    addressOrName: "0xf007ab65c07ac1f40d63d8cf36d116526edb7703",
     contractInterface: ContractABI.abi,
     functionName: "totalSupply",
     onSuccess(data) {
