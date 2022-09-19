@@ -53,7 +53,8 @@ export default function Home() {
             borderRadius={"10px"}
             border=".25vh solid black"
             minBlockSize={"250px"}
-            mb="2%"
+            mb="1.75%"
+            mt="-3%"
           />
         </Center>
       </GridItem>

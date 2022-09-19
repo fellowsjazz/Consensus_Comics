@@ -80,12 +80,16 @@ export default function WhiteListMintButton(props) {
     if (!localStorage.getItem("wagmi.connected")) {
       openConnectModal();
     }
-    if (!write) return;
+    if (!write) {
+      setShowToast(true);
+      onOpen()
+      return
+    };
     console.log("it sees write");
     onOpen();
     write();
     console.log("data from transaction: ", data);
-    setShowToast(true)
+    
   };
 
   const connectWarning = () => {

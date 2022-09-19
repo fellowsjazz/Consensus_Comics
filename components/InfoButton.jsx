@@ -10,6 +10,9 @@ import {
   DrawerCloseButton,
   useDisclosure,
   IconButton,
+  Flex,
+  Text,
+  Image
 } from "@chakra-ui/react";
 
 import { FaGithub, FaTwitter } from "react-icons/fa";
@@ -36,14 +39,17 @@ export default function InfoButton() {
           <DrawerHeader>Consensus Comics</DrawerHeader>
 
           <DrawerBody>
-            This generative NFT collection draws inspiration from the public
+            <Flex>
+              <Image src="/favicon.ico" boxSize={"100px"}/>
+              <Text>This generative NFT collection draws inspiration from the public
             domain comic books of the early 1950s, and was released in the week
             after Ethereum switched consensus mechanisms from PoW to PoS!
             <br />
             <br />
-            Each Consensus Comic is 0.005 ether to mint. Whitelisted minters can
-            claim up to 5 Consensus comics for free, and can mint more for 0.002
-            ether.
+            Each Consensus Comic is 0.005 Ξ to mint. Whitelisted minters can
+            claim up to 5 Consensus comics for free, and can mint more for 0.005
+             Ξ.</Text></Flex>
+            
           </DrawerBody>
 
           <DrawerFooter>
@@ -59,7 +65,11 @@ export default function InfoButton() {
                 pr={"1%"}
               />
             </a>
-            <a href="https://twitter.com/russmatthews_" target={"_blank"} rel="noreferrer">
+            <a
+              href="https://twitter.com/russmatthews_"
+              target={"_blank"}
+              rel="noreferrer"
+            >
               {" "}
               <IconButton icon={<FaTwitter />} bg={"blue.200"} mr="1%" />
             </a>
