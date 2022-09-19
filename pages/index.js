@@ -24,6 +24,7 @@ import MintCount from "../components/MintCount";
 import MintingControls from "../components/MintingControls";
 import InfoButton from "../components/InfoButton";
 
+
 export default function Home() {
 
   const {colorMode, toggleColorMode} = useColorMode()
@@ -52,6 +53,7 @@ export default function Home() {
             borderRadius={"10px"}
             border=".25vh solid black"
             minBlockSize={"250px"}
+            mb="2%"
           />
         </Center>
       </GridItem>
