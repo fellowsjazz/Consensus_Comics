@@ -37,7 +37,8 @@ export default function WhiteListMintButton(props) {
 
   //setting address to lowercase format
   useEffect(()=>{
-    setLowerCaseAddress(address.toLowerCase())
+    if(address){
+    setLowerCaseAddress(address.toLowerCase())}
   },[address])
 
   useEffect(()=>{
@@ -64,7 +65,7 @@ export default function WhiteListMintButton(props) {
  })
 
  const { write, data, isLoading, isSuccess } = useContractWrite(config);
- console.log(`Whitelist Button: Config: ${config} error ${error}`)
+ console.log(`Whitelist Button:Config: ${config} error ${error}`)
 
 
  
