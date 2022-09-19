@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, Flex } from "@chakra-ui/react";
 import { useContractRead } from "wagmi";
-import ContractABI from "../artifacts/contracts/ConsensusComics.sol/ConsensusComics.json";
+import ContractABI from "./ConsensusComics.json";
 
 export default function MintCount() {
   const [mintCount, setMintCount] = useState();

@@ -12,7 +12,7 @@ import {
   Spinner,
   Text
 } from "@chakra-ui/react";
-import ContractABI from "../artifacts/contracts/ConsensusComics.sol/ConsensusComics.json";
+import ContractABI from "./ConsensusComics.json";
 import { useContractWrite, usePrepareContractWrite } from "wagmi";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { BigNumber, ethers, utils } from "ethers";

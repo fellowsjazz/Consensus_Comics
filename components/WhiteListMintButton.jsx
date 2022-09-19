@@ -19,7 +19,7 @@ import {
   Spinner,
   Text
 } from "@chakra-ui/react";
-import ContractABI from "../artifacts/contracts/ConsensusComics.sol/ConsensusComics.json";
+import ContractABI from "./ConsensusComics.json";
 import { useContractWrite, usePrepareContractWrite, useAccount , useEnsAddress} from "wagmi";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import appData from "../constants";
