@@ -17,6 +17,7 @@ import {
   ModalCloseButton,
   useDisclosure,
   Spinner,
+  Text
 } from "@chakra-ui/react";
 import ContractABI from "../artifacts/contracts/ConsensusComics.sol/ConsensusComics.json";
 import { useContractWrite, usePrepareContractWrite, useAccount , useEnsAddress} from "wagmi";
@@ -98,7 +99,7 @@ export default function WhiteListMintButton(props) {
     }
     if (isSuccess) {
       return (
-        <a href={`https://etherscan.io/tx/${data.hash}`} target="_blank">
+        <a href={`https://etherscan.io/tx/${data.hash}`} target="_blank" rel="noreferrer">
           View Transaction
         </a>
       );
