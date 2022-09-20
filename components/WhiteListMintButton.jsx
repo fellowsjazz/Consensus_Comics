@@ -59,7 +59,7 @@ export default function WhiteListMintButton(props) {
 
   
  const {config, error} = usePrepareContractWrite({
-  addressOrName: '0xF007Ab65C07ac1F40D63D8cF36D116526eDB7703',
+  addressOrName: '0xF1C63EABe30386Ea35fE021cF918bdB7f8B6764B',
   contractInterface: ContractABI.abi,
   functionName: 'whiteListMint',
   args: [merkleProof, props.mintAmount]

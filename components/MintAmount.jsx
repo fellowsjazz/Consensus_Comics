@@ -27,7 +27,7 @@ export default function MintAmount(props) {
 
   return (
    
-        <Slider defaultValue={100} min={100} max={500} step={100} onChange={(v)=>{setSliderValue(v)}}>
+        <Slider defaultValue={100} min={100} max={500} step={100} onChange={(v)=>{setSliderValue(v)}} my="1%">
             <SliderTrack bg="blackAlpha.300" >
                 <SliderFilledTrack bg='blue.200'/>
             </SliderTrack>

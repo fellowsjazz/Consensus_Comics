@@ -47,9 +47,9 @@ export default function CustomConnect() {
               }
               if (chain.unsupported) {
                 return (
-                  <button onClick={openChainModal} type="button">
+                  <Button onClick={openChainModal} type="button" bg={"red"} size="lg">
                     Wrong network
-                  </button>
+                  </Button>
                 );
               }
               return (

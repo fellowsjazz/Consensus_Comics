@@ -26,7 +26,7 @@ export default function MintButton(props) {
   console.log("mintValue: ", mintValue, "mintvalue arg: ", mintValueArg);
 
   const { config, error } = usePrepareContractWrite({
-    addressOrName: "0xf007ab65c07ac1f40d63d8cf36d116526edb7703",
+    addressOrName: "0xF1C63EABe30386Ea35fE021cF918bdB7f8B6764B",
     contractInterface: ContractABI.abi,
     functionName: "mint",
     args: [props.mintAmount],
@@ -79,6 +79,7 @@ export default function MintButton(props) {
     } else return "Transaction Failed";
   };
 
+  
   return (
     <Flex direction="row" justify="center" width={"100%"}>
       <Button

@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <Flex direction='row'h={"8rem"} align="center">
         <Box>
-      <Image src={"/ConsensusComics.png"} max alt="alt" layout="responsive" maxBlockSize={"10rem"} />
+      <Image src={"/ConsensusComics.png"} max alt="alt" layout="responsive" maxBlockSize={"10rem"} mb="2%"/>
       </Box>
       
       <Spacer/>

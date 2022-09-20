@@ -67,10 +67,10 @@ export default function Home() {
           </GridItem>
         </Grid>
       </GridItem>
-      <GridItem rowStart={6} colSpan={1} bg="">
+      <GridItem rowStart={6} colSpan={1} bg="" mb="2%">
         <Center h={"full"}><MintCount/></Center>
       </GridItem>
-      <GridItem rowStart={6} colStart={5} bg="">
+      <GridItem rowStart={6} colStart={5} bg="" mb="2%">
         <Center h={"full"}><InfoButton/></Center>
       </GridItem>
     </Grid>
