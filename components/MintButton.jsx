@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Center, Flex, Image, Tooltip } from "@chakra-ui/react";
 import {
   Modal,
@@ -20,6 +20,8 @@ import { BigNumber, ethers, utils } from "ethers";
 export default function MintButton(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const [isFailed, setIsFailed] = useState(false);
+
   const mintValue = `${props.mintAmount * ethers.utils.parseEther("0.005")}`;
   const mintValueArg = BigNumber.from(mintValue);
 
@@ -33,6 +35,7 @@ export default function MintButton(props) {
     overrides: {
       value: mintValueArg,
     },
+    onError(error){console.log(`Error with transaction: ${error}`)}
   });
 
   console.log(`MintButton Config: ${config} Error: ${error}`);
@@ -76,8 +79,15 @@ export default function MintButton(props) {
           View Transaction
         </a>
       );
-    } else return "Transaction Failed";
+    } else {
+      console.log('failed: ', data)
+      setIsFailed(true)
+      return "Transaction Failed";}
   };
+
+  const FailedMessage = () => {
+    if(isFailed){return <Text fontSize={'xs'}>If the transaction failed on non-whitelist mint and you're using a ledger, try turning "debug data" on in your ledger's settings</Text>}
+  }
 
   
   return (
@@ -100,12 +110,17 @@ export default function MintButton(props) {
             <ModalCloseButton />
 
             <ModalFooter>
+              <Flex direction={"column"}>
+              <Flex direction={"row"}>
               <Button bg="red.300" mr={3} onClick={onClose}>
                 Close
               </Button>
               <Button variant="ghost" bg={"blue.200"}>
                 <TransactionCheck />
               </Button>
+              </Flex>
+              <FailedMessage/>
+              </Flex>
             </ModalFooter>
           </ModalContent>
         </Modal>
