@@ -53,7 +53,7 @@ export default function InfoButton() {
                 0.005 Ξ.
                 <br />
                 <br />
-                Check if you're on the whitelist{" "}
+                Check if you're on the whitelist
                 
                 <a
                   href="https://docs.google.com/spreadsheets/d/1AG7-H3F9RlWWCIq9KX8BnC3rHXjYrZuGLM-DTM-ZdjA/edit?usp=sharing"
