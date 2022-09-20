@@ -22,6 +22,7 @@ export default function MintingControls() {
       <Center>
         <Text>{mintAmount * 0.005}Ξ</Text>
       </Center>
+      <Center><Text fontSize={'xs'}>(whitelist mint is free)</Text></Center>
     </Flex>
   );
 }
