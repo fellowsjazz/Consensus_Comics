@@ -86,7 +86,7 @@ export default function MintButton(props) {
   };
 
   const FailedMessage = () => {
-    if(isFailed){return <Text fontSize={'xs'}>If the transaction failed on non-whitelist mint and you're using a ledger, try turning "debug data" on in your ledger's settings</Text>}
+    if(isFailed){return <Text fontSize={'xs'}>If the transaction failed on non-whitelist mint and you're using a ledger, try turning debug data on in your ledger settings</Text>}
   }
 
   
